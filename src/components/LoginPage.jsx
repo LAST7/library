@@ -1,9 +1,9 @@
-import Login from "./Login";
+import LoginTab from "./LoginTab";
 
 // put the login card in the middle of the window
 const LoginPage = () => (
     <div className="flex items-center justify-center h-screen">
-        <Login className="pb-64" />
+        <LoginTab className="pb-64" />
     </div>
 );
 

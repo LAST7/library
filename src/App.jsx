@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes, redirect } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage";
 
 import { setUser } from "./reducers/userReducer";
 
 const App = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     let localUser = null;
@@ -19,9 +20,8 @@ const App = () => {
             // TODO: handle token
         } else {
             // if user not login, redirect to login page
-            // and hide the navbar
-            redirect("/login");
             console.log("no login!");
+            navigate("/login");
         }
     }, []);
 

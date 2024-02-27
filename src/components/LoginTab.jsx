@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { twMerge } from "tailwind-merge";
 
-const Login = ({ className, ...props }) => {
+const LoginTab = ({ className, ...props }) => {
     return (
         <div className={twMerge("w-[450px]", className)} {...props}>
             <Tabs defaultValue="student">
@@ -47,7 +47,7 @@ const Login = ({ className, ...props }) => {
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-2xl">
-                                管理员入口
+                                管理员登录
                             </CardTitle>
                             <CardDescription className="text-0.5xl">
                                 欢迎使用图书馆座位预约系统！
@@ -73,4 +73,4 @@ const Login = ({ className, ...props }) => {
     );
 };
 
-export default Login;
+export default LoginTab;
