@@ -5,11 +5,12 @@ const BASE_URL = "http://localhost:3003/api/login";
 /**
  * Login service
  *
- * @param {object} credentials - should be an object containing the username and password
- * @returns {object} - the data returned by the backend server
+ * @param {object} credentials - should be an object containing username & password
+ * @param {string} userType - user/admin
+ * @returns {object} - the user data returned by the backend server
  */
-const login = async (credentials) => {
-    const response = await axios.post(BASE_URL, credentials);
+const login = async (credentials, userType) => {
+    const response = await axios.post(`${BASE_URL}/${userType}`, credentials);
     return response.data;
 };
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage";
@@ -13,17 +13,20 @@ const App = () => {
     let localUser = null;
     useEffect(() => {
         const localUserJSON = window.localStorage.getItem("localUser");
-        // TEST: testing pages other than login
+        // TODO: handle token
         if (localUserJSON) {
             localUser = JSON.parse(localUserJSON);
             dispatch(setUser(localUser));
-            // TODO: handle token
-        } else {
-            // if user not login, redirect to login page
-            console.log("no login!");
-            navigate("/login");
         }
     }, []);
+
+    const currentUser = useSelector((state) => state.userLogin);
+
+    // TEST: testing pages other than login
+    /* if (!currentUser) {
+        console.log("No login! Navigating to the login page");
+        navigate("/login");
+    } */
 
     return (
         <div>

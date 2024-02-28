@@ -1,3 +1,10 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { twMerge } from "tailwind-merge";
+
+import { loginUser } from "@/reducers/userReducer";
+import { loginAdmin } from "@/reducers/adminReducer";
+
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -10,15 +17,55 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { twMerge } from "tailwind-merge";
 
 const LoginTab = ({ className, ...props }) => {
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [adminUserName, setAdminUserName] = useState("");
+    const [adminPassword, setAdminPassword] = useState("");
+
+    const emptyInput = () => {
+        setUsername("");
+        setPassword("");
+        setAdminUserName("");
+        setAdminPassword("");
+    };
+
+    const handleUserLogin = async () => {
+        dispatch(loginUser(username, password))
+            .then((user) => {
+                // store the returned info
+                window.localStorage.setItem("localUser", JSON.stringify(user));
+                // TODO: handle token
+                emptyInput();
+            })
+            // TODO: notification
+            .catch((err) => console.error(err));
+    };
+
+    const handleAdminLogin = async () => {
+        dispatch(loginAdmin(adminUserName, adminPassword))
+            .then((user) => {
+                // store the returned info
+                window.localStorage.setItem("localUser", JSON.stringify(user));
+                // TODO: handle token
+                emptyInput();
+            })
+            // TODO: notification
+            .catch((err) => console.error(err));
+    };
+
     return (
         <div className={twMerge("w-[450px]", className)} {...props}>
             <Tabs defaultValue="student">
                 <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="student">学生入口</TabsTrigger>
-                    <TabsTrigger value="admin">管理员入口</TabsTrigger>
+                    <TabsTrigger value="student" onClick={emptyInput}>
+                        学生入口
+                    </TabsTrigger>
+                    <TabsTrigger value="admin" onClick={emptyInput}>
+                        管理员入口
+                    </TabsTrigger>
                 </TabsList>
                 <TabsContent value="student">
                     <Card>
@@ -30,16 +77,31 @@ const LoginTab = ({ className, ...props }) => {
                         </CardHeader>
                         <CardContent className="space-y-2">
                             <div className="space-y-2">
-                                <Label htmlFor="student-id">学号</Label>
-                                <Input id="student-id" />
+                                <Label htmlFor="student-id">
+                                    用户名（学号）
+                                </Label>
+                                <Input
+                                    id="student-id"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="stu-passwd">密码</Label>
-                                <Input id="stu-passwd" type="password" />
+                                <Input
+                                    id="stu-passwd"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                />
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button>登录</Button>
+                            <Button onClick={handleUserLogin}>登录</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -56,15 +118,28 @@ const LoginTab = ({ className, ...props }) => {
                         <CardContent className="space-y-2">
                             <div className="space-y-2">
                                 <Label htmlFor="admin-id">管理员账号</Label>
-                                <Input id="admin-id" />
+                                <Input
+                                    id="admin-id"
+                                    value={adminUserName}
+                                    onChange={(e) =>
+                                        setAdminUserName(e.target.value)
+                                    }
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="admin-passwd">密码</Label>
-                                <Input id="admin-passwd" type="password" />
+                                <Input
+                                    id="admin-passwd"
+                                    type="password"
+                                    value={adminPassword}
+                                    onChange={(e) =>
+                                        setAdminPassword(e.target.value)
+                                    }
+                                />
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button>登录</Button>
+                            <Button onClick={handleAdminLogin}>登录</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>

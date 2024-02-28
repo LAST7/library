@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import loginService from "../services/login";
 
+const USER_TYPE = "student";
+
 const userSlice = createSlice({
-    name: "login",
+    name: "userLogin",
     initialState: null,
     reducers: {
         setUserAction(_state, action) {
@@ -25,7 +27,6 @@ const { setUserAction, clearUserAction } = userSlice.actions;
  * @returns {void} This function does not return anything.
  */
 export const setUser = (user) => {
-    console.log(user);
     return (dispatch) => {
         dispatch(setUserAction(user));
     };
@@ -42,7 +43,13 @@ export const setUser = (user) => {
  */
 export const loginUser = (username, password) => {
     return async (dispatch) => {
-        const user = await loginService.login({ username, password });
+        const user = await loginService.login(
+            {
+                username,
+                password,
+            },
+            USER_TYPE,
+        );
 
         dispatch(setUserAction(user));
         return user;
