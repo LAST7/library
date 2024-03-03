@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import loginService from "../services/login";
+import registerService from "../services/register";
 
 const USER_TYPE = "student";
 
@@ -37,20 +38,31 @@ export const setUser = (user) => {
  * Note that this action creator is not responsible for either storing the token to the local storage or set token in blog service.
  * Use this function when logging in.
  *
- * @param {string} username - username
+ * @param {string} studentId - student id
  * @param {string} password - the unencrypted password
  * @returns {Promise<Object>} A Promise that resolves with the user object upon successful login.
  */
-export const loginUser = (username, password) => {
+export const loginUser = (studentId, password) => {
     return async (dispatch) => {
         const user = await loginService.login(
             {
-                username,
+                studentId,
                 password,
             },
             USER_TYPE,
         );
+        dispatch(setUserAction(user));
+        return user;
+    };
+};
 
+export const registerUser = (studentId, username, password) => {
+    return async (dispatch) => {
+        const user = await registerService.register({
+            studentId,
+            username,
+            password,
+        });
         dispatch(setUserAction(user));
         return user;
     };
