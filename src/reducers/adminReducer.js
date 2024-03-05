@@ -28,11 +28,11 @@ const { setAdminAction, clearAdminAction } = adminSlice.actions;
  * @param {string} password - the unencrypted password
  * @returns {Promise<Object>} A Promise that resolves with the user object upon successful login.
  */
-export const loginAdmin = (username, password) => {
+export const loginAdmin = (adminId, password) => {
     return async (dispatch) => {
         const admin = await loginService.login(
             {
-                username,
+                adminId,
                 password,
             },
             USER_TYPE,

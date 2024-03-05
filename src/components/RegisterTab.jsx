@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import { registerUser } from "@/reducers/userReducer";
+import seatService from "@/services/seat";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const LoginTab = ({ className, ...props }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [studentId, setStudentId] = useState("");
     const [username, setUsername] = useState("");
@@ -49,15 +52,21 @@ const LoginTab = ({ className, ...props }) => {
     };
 
     const handleUserRegister = async () => {
-        validatePassword();
+        if (!validatePassword()) {
+            // TODO: notification
+            console.error("invalid password");
+            return;
+        }
 
         // TODO: notification
         dispatch(registerUser(studentId, username, password))
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                // TODO: handle token
+                seatService.setToken(user.token);
                 emptyInput();
+                // navigate back to main page
+                navigate("/");
             })
             .catch((err) => console.error(err));
     };

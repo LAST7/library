@@ -6,6 +6,8 @@ import { twMerge } from "tailwind-merge";
 import { loginUser } from "@/reducers/userReducer";
 import { loginAdmin } from "@/reducers/adminReducer";
 
+import seatService from "@/services/seat";
+
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -40,8 +42,10 @@ const LoginTab = ({ className, ...props }) => {
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                // TODO: handle token
+                seatService.setToken(user.token);
                 emptyInput();
+                // navigate back to main page
+                navigate("/");
             })
             // TODO: notification
             .catch((err) => console.error(err));
@@ -52,7 +56,7 @@ const LoginTab = ({ className, ...props }) => {
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                // TODO: handle token
+                seatService.setToken(user.token);
                 emptyInput();
             })
             // TODO: notification

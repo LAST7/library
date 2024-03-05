@@ -1,23 +1,24 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 
 import { setUser } from "./reducers/userReducer";
+import seatService from "@/services/seat";
 
 const App = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    let localUser = null;
+    // get the login info
     useEffect(() => {
         const localUserJSON = window.localStorage.getItem("localUser");
-        // TODO: handle token
         if (localUserJSON) {
-            localUser = JSON.parse(localUserJSON);
+            const localUser = JSON.parse(localUserJSON);
             dispatch(setUser(localUser));
+            seatService.setToken(localUser.token);
         } else {
             navigate("/login");
         }
