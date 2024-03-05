@@ -4,9 +4,11 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
+import { Toaster } from "./components/ui/sonner";
 
 import { setUser } from "./reducers/userReducer";
 import seatService from "@/services/seat";
+import { toast } from "sonner";
 
 const App = () => {
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ const App = () => {
             seatService.setToken(localUser.token);
         } else {
             navigate("/login");
+            toast.message("未检测到本地存储的用户信息，请登录");
         }
     }, []);
 
@@ -32,6 +35,12 @@ const App = () => {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/reserve" element={<h1>Reservation Page</h1>} />
             </Routes>
+            <Toaster
+                position="top-center"
+                expand={false}
+                richColors
+                closeButton
+            />
         </div>
     );
 };

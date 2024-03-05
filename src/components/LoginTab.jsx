@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const LoginTab = ({ className, ...props }) => {
     const dispatch = useDispatch();
@@ -46,9 +47,13 @@ const LoginTab = ({ className, ...props }) => {
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
+                // notification
+                toast.info(`用户 ${user.username} 登录成功, 欢迎！`);
             })
-            // TODO: notification
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response.data.error);
+            });
     };
 
     const handleAdminLogin = async () => {
@@ -58,9 +63,15 @@ const LoginTab = ({ className, ...props }) => {
                 window.localStorage.setItem("localUser", JSON.stringify(user));
                 seatService.setToken(user.token);
                 emptyInput();
+                // navigate back to main page
+                navigate("/");
+                // notification
+                toast.info(`管理员 ${user.username} 登录成功, 欢迎！`);
             })
-            // TODO: notification
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response.data.error);
+            });
     };
 
     const handleRegister = () => {

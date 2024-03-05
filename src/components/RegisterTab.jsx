@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const LoginTab = ({ className, ...props }) => {
     const navigate = useNavigate();
@@ -34,31 +35,27 @@ const LoginTab = ({ className, ...props }) => {
         setRepPassword("");
     };
 
-    /**
-     * validate password input by user
-     *
-     * @param {string} passwd - password
-     * @param {string} repPasswd - repeat password
-     *
-     * @returns {boolean} a boolean variable representing success/failure of the validation
-     */
-    const validatePassword = () => {
+    const validateInput = () => {
+        if (studentId === "" || username === "" || password === "") {
+            toast.warning("请输入完整的用户信息");
+            return false;
+        }
         if (password !== repPassword) {
+            toast.warning("两次输入的密码不一致");
             return false;
         }
         if (password.length < 8) {
+            toast.warning("密码长度不能小于 8 位");
             return false;
         }
     };
 
     const handleUserRegister = async () => {
-        if (!validatePassword()) {
-            // TODO: notification
-            console.error("invalid password");
+        if (!validateInput()) {
+            console.error("illegal input");
             return;
         }
 
-        // TODO: notification
         dispatch(registerUser(studentId, username, password))
             .then((user) => {
                 // store the returned info
@@ -67,8 +64,12 @@ const LoginTab = ({ className, ...props }) => {
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
+                toast.info(`${user.username} 已完成注册, 欢迎！`);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response.data.error);
+            });
     };
 
     return (
