@@ -1,12 +1,11 @@
+import { twMerge } from "tailwind-merge";
+import { toast } from "sonner";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { twMerge } from "tailwind-merge";
 
 import { loginUser } from "@/reducers/userReducer";
 import { loginAdmin } from "@/reducers/adminReducer";
-
-import seatService from "@/services/seat";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "sonner";
 
 const LoginTab = ({ className, ...props }) => {
     const dispatch = useDispatch();
@@ -43,7 +41,6 @@ const LoginTab = ({ className, ...props }) => {
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                seatService.setToken(user.token);
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
@@ -61,7 +58,6 @@ const LoginTab = ({ className, ...props }) => {
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                seatService.setToken(user.token);
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
@@ -72,10 +68,6 @@ const LoginTab = ({ className, ...props }) => {
                 console.error(err);
                 toast.error(err.response.data.error);
             });
-    };
-
-    const handleRegister = () => {
-        navigate("/register");
     };
 
     return (
@@ -122,7 +114,12 @@ const LoginTab = ({ className, ...props }) => {
                         </CardContent>
                         <CardFooter className="justify-evenly">
                             <Button onClick={handleUserLogin}>登录</Button>
-                            <Button onClick={handleRegister}>注册</Button>
+                            <Button
+                                variant="secondary"
+                                onClick={() => navigate("/register")}
+                            >
+                                注册
+                            </Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>

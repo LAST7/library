@@ -1,23 +1,51 @@
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { ExitIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
-import UserStat from "@/components/UserPage/UserStat";
+import { ExitIcon } from "@radix-ui/react-icons";
 import BackButton from "@/components/BackButton";
+import ChgPasswdDialog from "@/components/UserPage/ChgPasswdDialog";
+import UserStat from "@/components/UserPage/UserStat";
+
+import { clearUser } from "@/reducers/userReducer";
+import userService from "@/services/user";
 
 import avatar from "../assets/last-avatar.webp";
-import ChgPasswdDialog from "./UserPage/ChgPasswdDialog";
-import { clearUser } from "@/reducers/userReducer";
-import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state) => state.user);
 
-    // TODO: should navigate to login page if user is null
-    if (!user) {
-        return null;
+    const user = useSelector((state) => state.user);
+    const localUser = window.localStorage.getItem("localUser");
+
+    const [stats, setStats] = useState(null);
+    useEffect(() => {
+        if (!user) {
+            return;
+        }
+
+        // somehow async functions need to be written this way
+        const fetchData = async () => {
+            const userInfo = await userService.getInfo();
+            setStats(userInfo);
+        };
+        fetchData();
+    }, [user]);
+
+    // navigate to login page if no user stored locally
+    if (!user && !localUser) {
+        navigate("/login");
+    } else if (!user) {
+        return (
+            <section
+                id="user"
+                className="container py-24 h-full justify-center"
+            >
+                <div className="text-3xl text-center">Loading...</div>
+            </section>
+        );
     }
 
     const handlelogOut = () => {
@@ -39,7 +67,7 @@ const UserPage = () => {
                                 </span>
                             </h2>
                         </div>
-                        <UserStat />
+                        <UserStat stats={stats} />
                     </div>
                     <div className="flex flex-col gap-4">
                         <img

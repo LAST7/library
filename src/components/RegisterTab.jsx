@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import { registerUser } from "@/reducers/userReducer";
-import seatService from "@/services/seat";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -48,6 +47,8 @@ const LoginTab = ({ className, ...props }) => {
             toast.warning("密码长度不能小于 8 位");
             return false;
         }
+
+        return true;
     };
 
     const handleUserRegister = async () => {
@@ -60,7 +61,6 @@ const LoginTab = ({ className, ...props }) => {
             .then((user) => {
                 // store the returned info
                 window.localStorage.setItem("localUser", JSON.stringify(user));
-                seatService.setToken(user.token);
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
@@ -132,8 +132,14 @@ const LoginTab = ({ className, ...props }) => {
                                 />
                             </div>
                         </CardContent>
-                        <CardFooter>
+                        <CardFooter className="justify-evenly">
                             <Button onClick={handleUserRegister}>注册</Button>
+                            <Button
+                                variant="secondary"
+                                onClick={() => navigate("/login")}
+                            >
+                                登录
+                            </Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>

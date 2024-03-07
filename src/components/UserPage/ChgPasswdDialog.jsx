@@ -1,7 +1,12 @@
+import { toast } from "sonner";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { LockClosedIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Dialog,
     DialogContent,
@@ -10,11 +15,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+
+import { clearUser } from "@/reducers/userReducer";
+import userService from "@/services/user";
 
 const ChgPasswdDialog = ({ buttonVariant }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [oldPasswd, setOldPasswd] = useState("");
     const [newPasswd, setNewPasswd] = useState("");
 
@@ -32,8 +40,33 @@ const ChgPasswdDialog = ({ buttonVariant }) => {
             toast.warning("密码长度不能小于 8 位");
             return;
         }
-        // TODO: handle password change submit
-        // remember to delete local token and log out
+        if (oldPasswd === newPasswd) {
+            toast.warning("两次输入的密码相同");
+            return;
+        }
+
+        // handle password change submit
+        const credentials = {
+            oldPasswd,
+            newPasswd,
+        };
+        userService
+            .changePasswd(credentials)
+            .then(() => {
+                // delete local token and log out
+                window.localStorage.removeItem("localUser");
+                dispatch(clearUser());
+                emptyInput();
+
+                toast.info("密码修改成功，请重新登录");
+                // BUG: This will trigger an update while the component is being renderred.
+                // No idea why this happends and how to fix it.
+                navigate("/login");
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.response.data.error);
+            });
     };
 
     return (

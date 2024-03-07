@@ -1,15 +1,14 @@
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { Toaster } from "./components/ui/sonner";
-import { toast } from "sonner";
 
-import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
-import UserPage from "./components/UserPage";
+import { Toaster } from "@/components/ui/sonner";
+import LoginPage from "@/components/LoginPage";
+import RegisterPage from "@/components/RegisterPage";
+import UserPage from "@/components/UserPage";
 
-import { setUser } from "./reducers/userReducer";
-import seatService from "@/services/seat";
+import { setUser } from "@/reducers/userReducer";
 
 const App = () => {
     const navigate = useNavigate();
@@ -21,7 +20,6 @@ const App = () => {
         if (localUserJSON) {
             const localUser = JSON.parse(localUserJSON);
             dispatch(setUser(localUser));
-            seatService.setToken(localUser.token);
         } else {
             navigate("/login");
             toast.message("未检测到本地存储的用户信息，请登录");
