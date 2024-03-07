@@ -5,7 +5,7 @@ import loginService from "../services/login";
 const USER_TYPE = "admin";
 
 const adminSlice = createSlice({
-    name: "adminLogin",
+    name: "admin",
     initialState: null,
     reducers: {
         setAdminAction(_state, action) {

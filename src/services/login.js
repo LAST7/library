@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003/api/user/login";
+const BASE_URL = "http://localhost:3003/api/login";
 
 /**
  * Login service

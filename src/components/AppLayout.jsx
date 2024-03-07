@@ -16,7 +16,7 @@ export const Sidebar = ({ className, children, ...props }) => {
     return (
         <aside
             className={twMerge(
-                "w-[250px] mt-10 h-[100vh + 10px] overflow-auto",
+                "bg-gray-800 h-full w-1/6 overflow-auto",
                 className,
             )}
             {...props}

@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
+import { toast } from "sonner";
 
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
-import { Toaster } from "./components/ui/sonner";
+import UserPage from "./components/UserPage";
 
 import { setUser } from "./reducers/userReducer";
 import seatService from "@/services/seat";
-import { toast } from "sonner";
 
 const App = () => {
     const navigate = useNavigate();
@@ -33,7 +34,11 @@ const App = () => {
                 <Route path="/" element={<h1>Hello World</h1>} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/reserve" element={<h1>Reservation Page</h1>} />
+                <Route path="/user" element={<UserPage />} />
+                <Route
+                    path="/reservation"
+                    element={<h1>Reservation Page</h1>}
+                />
             </Routes>
             <Toaster
                 position="top-center"

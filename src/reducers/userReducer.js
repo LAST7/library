@@ -6,7 +6,7 @@ import registerService from "../services/register";
 const USER_TYPE = "student";
 
 const userSlice = createSlice({
-    name: "userLogin",
+    name: "user",
     initialState: null,
     reducers: {
         setUserAction(_state, action) {
