@@ -88,8 +88,8 @@ const LoginTab = ({ className, ...props }) => {
                 toast.info(`用户 ${user.username} 登录成功, 欢迎！`);
             })
             .catch((err) => {
-                console.error(err);
                 toast.error(err.response.data.error);
+                console.error(err);
             });
     };
 

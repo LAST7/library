@@ -17,8 +17,6 @@ const User = () => {
 
     const [stats, setStats] = useState(null);
     useEffect(() => {
-        if (!user) return;
-
         // somehow async functions inside useEffect hook need to be written this way
         const fetchData = async () => {
             const userInfo = await userService.getInfo();
@@ -29,6 +27,8 @@ const User = () => {
             console.error(err);
         });
     }, [user]);
+
+    if (!user) return;
 
     // navigate to login page if no user stored locally
     if (!user && !localUser) {

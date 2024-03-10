@@ -21,7 +21,7 @@ const UserReservation = () => {
                 setRecords(res);
             })
             .catch((err) => {
-                toast.error(err);
+                toast.error(err.response.data.error);
                 console.error(err);
             });
     }, []);

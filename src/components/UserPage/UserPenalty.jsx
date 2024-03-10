@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 import PenaltyTable from "./PenaltyTable";
 
@@ -14,7 +15,7 @@ const UserPenalty = () => {
                 setRecords(res);
             })
             .catch((err) => {
-                toast.error(err);
+                toast.error(err.response.data.error);
                 console.error(err);
             });
     }, []);

@@ -1,8 +1,8 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { toast } from "sonner";
 
 import { Toaster } from "@/components/ui/sonner";
 import Login from "@/components/Login";
