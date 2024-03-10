@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
@@ -22,6 +23,16 @@ import { toast } from "sonner";
 const LoginTab = ({ className, ...props }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [localUser, setLocalUser] = useLocalStorage("localUser", null);
+
+    // navigate to user page if user already logged in
+    useEffect(() => {
+        if (localUser) {
+            navigate("/");
+        }
+    }, []);
+
     const [studentId, setStudentId] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -60,7 +71,7 @@ const LoginTab = ({ className, ...props }) => {
         dispatch(registerUser(studentId, username, password))
             .then((user) => {
                 // store the returned info
-                window.localStorage.setItem("localUser", JSON.stringify(user));
+                setLocalUser(user);
                 emptyInput();
                 // navigate back to main page
                 navigate("/");

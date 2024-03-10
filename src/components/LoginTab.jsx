@@ -1,7 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
 
 import { loginUser } from "@/reducers/userReducer";
@@ -24,6 +25,15 @@ const LoginTab = ({ className, ...props }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [localUser, setLocalUser] = useLocalStorage("localUser", null);
+
+    // navigate to user page if user already logged in
+    useEffect(() => {
+        if (localUser) {
+            navigate("/");
+        }
+    }, []);
+
     const [studentId, setStudentId] = useState("");
     const [password, setPassword] = useState("");
     const [adminUserName, setAdminUserName] = useState("");
@@ -36,11 +46,41 @@ const LoginTab = ({ className, ...props }) => {
         setAdminPassword("");
     };
 
+    const validateUserInput = () => {
+        if (studentId === "" || password === "") {
+            toast.warning("请输入完整的用户信息");
+            return false;
+        }
+        if (password.length < 8) {
+            toast.warning("密码长度不能小于 8 位");
+            return false;
+        }
+
+        return true;
+    };
+
+    const validateAdminInput = () => {
+        if (adminUserName === "" || adminPassword === "") {
+            toast.warning("请输入完整的用户信息");
+            return false;
+        }
+        if (adminPassword.length < 8) {
+            toast.warning("密码长度不能小于 8 位");
+            return false;
+        }
+
+        return true;
+    };
+
     const handleUserLogin = async () => {
+        if (!validateUserInput()) {
+            return;
+        }
+
         dispatch(loginUser(studentId, password))
             .then((user) => {
                 // store the returned info
-                window.localStorage.setItem("localUser", JSON.stringify(user));
+                setLocalUser(user);
                 emptyInput();
                 // navigate back to main page
                 navigate("/");
@@ -54,13 +94,18 @@ const LoginTab = ({ className, ...props }) => {
     };
 
     const handleAdminLogin = async () => {
+        if (!validateAdminInput()) {
+            return;
+        }
+
         dispatch(loginAdmin(adminUserName, adminPassword))
             .then((user) => {
                 // store the returned info
-                window.localStorage.setItem("localUser", JSON.stringify(user));
+                setLocalUser(user);
                 emptyInput();
                 // navigate back to main page
-                navigate("/");
+                // TODO: the admin page
+                navigate("/admin");
                 // notification
                 toast.info(`管理员 ${user.username} 登录成功, 欢迎！`);
             })

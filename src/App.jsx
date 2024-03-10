@@ -1,12 +1,14 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 import { Toaster } from "@/components/ui/sonner";
-import LoginPage from "@/components/LoginPage";
-import RegisterPage from "@/components/RegisterPage";
-import UserPage from "@/components/UserPage";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
+import Reservation from "@/components/Reservation";
+import User from "@/components/User";
 
 import { setUser } from "@/reducers/userReducer";
 
@@ -14,29 +16,26 @@ const App = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [localUser, setLocalUser] = useLocalStorage("localUser", null);
+
     // get the login info
     useEffect(() => {
-        const localUserJSON = window.localStorage.getItem("localUser");
-        if (localUserJSON) {
-            const localUser = JSON.parse(localUserJSON);
+        if (localUser) {
             dispatch(setUser(localUser));
         } else {
             navigate("/login");
             toast.message("未检测到本地存储的用户信息，请登录");
         }
-    }, []);
+    }, [localUser]);
 
     return (
         <div>
             <Routes>
-                <Route path="/" element={<h1>Hello World</h1>} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/user" element={<UserPage />} />
-                <Route
-                    path="/reservation"
-                    element={<h1>Reservation Page</h1>}
-                />
+                <Route path="/" element={<User />} />
+                <Route path="/admin" element={<p>hello admin</p>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/reservation" element={<Reservation />} />
             </Routes>
             <Toaster
                 position="top-center"

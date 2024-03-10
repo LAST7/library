@@ -1,7 +1,7 @@
-import { toast } from "sonner";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import { LockClosedIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ import {
 import { clearUser } from "@/reducers/userReducer";
 import userService from "@/services/user";
 
-const ChgPasswdDialog = ({ buttonVariant }) => {
+const ChgPasswdDialog = ({ buttonVariant, setLocalUser }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -54,13 +54,15 @@ const ChgPasswdDialog = ({ buttonVariant }) => {
             .changePasswd(credentials)
             .then(() => {
                 // delete local token and log out
-                window.localStorage.removeItem("localUser");
+                setLocalUser(null);
                 dispatch(clearUser());
                 emptyInput();
 
                 toast.info("密码修改成功，请重新登录");
                 // BUG: This will trigger an update while the component is being renderred.
-                // No idea why this happends and how to fix it.
+                // Maybe it's because that:
+                // this call is inside a callback function of an asynchronous operation,
+                // thus causing it being executed during the rendering of other components
                 navigate("/login");
             })
             .catch((err) => {

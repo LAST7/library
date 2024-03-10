@@ -1,15 +1,15 @@
 import axios from "axios";
 
+const BASE_URL = "http://localhost:3003/api/penalty";
+
 import tokenService from "./token";
 
-const BASE_URL = "http://localhost:3003/api/seat";
-
 /**
- * Get seat info of the library
+ * Get penalty records of the current user.
  *
  * @returns {Promise<object>} - data returned from the backend server
  */
-const getSeat = async () => {
+const getPenalty = async () => {
     const config = {
         headers: { Authorization: tokenService.getToken() },
     };
@@ -19,5 +19,5 @@ const getSeat = async () => {
 };
 
 export default {
-    getSeat,
+    getPenalty,
 };

@@ -2,8 +2,8 @@ const UserStat = ({ stats }) => {
     if (!stats || stats.loading) {
         return (
             <section
-                id="user"
-                className="container py-24 h-full justify-center"
+                id="user-stat"
+                className="py-24 h-full justify-center"
             >
                 <div className="text-3xl text-center">Loading...</div>
             </section>
