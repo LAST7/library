@@ -99,15 +99,12 @@ const LoginTab = ({ className, ...props }) => {
         }
 
         dispatch(loginAdmin(adminUserName, adminPassword))
-            .then((user) => {
-                // store the returned info
-                setLocalUser(user);
+            .then((admin) => {
                 emptyInput();
-                // navigate back to main page
-                // TODO: the admin page
+                // navigate to admin page
                 navigate("/admin");
                 // notification
-                toast.info(`管理员 ${user.username} 登录成功, 欢迎！`);
+                toast.info(`管理员 ${admin.name} 登录成功, 欢迎！`);
             })
             .catch((err) => {
                 console.error(err);

@@ -96,10 +96,12 @@ const Reservation = () => {
                     `座位 ${res.floor_level} 楼 ${res.seat_number} 预订成功，请回到个人主页查看`,
                 );
             })
-            .catch((err) => console.error(err.response.data.error));
+            .catch((err) => {
+                console.error(err)
+                toast.error(err.response.data.error);
+            });
     };
 
-    // TODO: yesterday: alert dialog to confirm reservation
     return (
         <section id="user" className="container py-24 h-full">
             <BackButton />

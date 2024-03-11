@@ -35,7 +35,7 @@ const UserStat = ({ stats }) => {
                 {formatStats.map(({ content, description }) => (
                     <div
                         key={description}
-                        className="space-y-2 py-2 text-center border-4 rounded-lg "
+                        className="py-4 text-center border-4 rounded-lg "
                     >
                         <h2 className="text-3xl font-bold">{content}</h2>
                         <p className="text-xl text-muted-foreground">
