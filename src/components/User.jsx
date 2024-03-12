@@ -17,18 +17,14 @@ const User = () => {
 
     const [stats, setStats] = useState(null);
     useEffect(() => {
-        // somehow async functions inside useEffect hook need to be written this way
-        const fetchData = async () => {
-            const userInfo = await userService.getInfo();
-            setStats(userInfo);
-        };
-        fetchData().catch((err) => {
-            toast.error("无法获取服务器数据");
-            console.error(err);
-        });
+        userService
+            .getInfo()
+            .then((userInfo) => setStats(userInfo))
+            .catch((err) => {
+                toast.error("无法获取服务器数据");
+                console.error(err.response.data.error);
+            });
     }, [user]);
-
-    if (!user) return;
 
     // navigate to login page if no user stored locally
     if (!user && !localUser) {

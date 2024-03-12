@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 
 import AdminInfo from "@/components/AdminPage/AdminInfo";
 import FloorStat from "@/components/AdminPage/FloorStat";
+import PenaltyStat from "./AdminPage/PenaltyStat";
 
 import adminService from "@/services/admin";
 import { toast } from "sonner";
-import PenaltyStat from "./AdminPage/PenaltyStat";
 
 const FloorContext = createContext();
 export const useFloor = () => useContext(FloorContext);

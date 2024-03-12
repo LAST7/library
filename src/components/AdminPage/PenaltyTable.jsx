@@ -42,7 +42,7 @@ const AdminPenaltyTable = () => {
                         <TableCell className="text-xl">{p.username}</TableCell>
                         <TableCell className="text-xl">{p.reason}</TableCell>
                         <TableCell className="text-right text-xl font-bold">
-                            {new Date(p.until).toLocaleString("zh-CN")}
+                            {new Date(p.until).toLocaleDateString("zh-CN")}
                         </TableCell>
                     </TableRow>
                 ))}

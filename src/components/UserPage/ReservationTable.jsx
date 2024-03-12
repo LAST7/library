@@ -8,9 +8,10 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 const ReservationTable = ({ records }) => {
-    // TODO: maybe a scroll area to avoid the list become to long
+    // TODO: maybe a scroll area to avoid the area from becoming too long
     // when there are too many records
 
     if (records.length === 0) {
@@ -51,7 +52,13 @@ const ReservationTable = ({ records }) => {
                                     </strong>
                                 </p>
                             </TableCell>
-                            <TableCell className="text-right font-bold">
+                            <TableCell
+                                className={cn("text-right font-bold", {
+                                    "text-gray-500": r.status === "已过期",
+                                    "text-sky-300": r.status === "进行中",
+                                    "text-red-400": r.status === "取消",
+                                })}
+                            >
                                 {r.status}
                             </TableCell>
                         </TableRow>

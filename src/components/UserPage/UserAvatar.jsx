@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ExitIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
-import { ExitIcon } from "@radix-ui/react-icons";
 import ChgPasswdDialog from "@/components/UserPage/ChgPasswdDialog";
 
 import { clearUser } from "@/reducers/userReducer";
