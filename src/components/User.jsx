@@ -17,6 +17,11 @@ const User = () => {
 
     const [stats, setStats] = useState(null);
     useEffect(() => {
+        // navigate to login page if no user stored locally
+        if (!user || !localUser) {
+            navigate("/login");
+        }
+
         userService
             .getInfo()
             .then((userInfo) => setStats(userInfo))
@@ -26,13 +31,10 @@ const User = () => {
             });
     }, [user]);
 
-    // navigate to login page if no user stored locally
-    if (!user && !localUser) {
-        navigate("/login");
-    } else if (!user) {
+    if (!user) {
         return (
             <section id="user" className="py-24 h-full justify-center">
-                <div className="text-3xl text-center">Loading...</div>
+                <div className="text-3xl text-center">Not Logged In</div>
             </section>
         );
     }
