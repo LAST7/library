@@ -26,8 +26,14 @@ const User = () => {
             .getInfo()
             .then((userInfo) => setStats(userInfo))
             .catch((err) => {
-                toast.error("无法获取服务器数据");
-                console.error(err.response.data.error);
+                toast.error("无法获取用户数据");
+                if (err.response) {
+                    // error during requesting data
+                    console.error(err.response.data.error);
+                } else {
+                    // error during forming request, probably missing local token
+                    console.error(err);
+                }
             });
     }, [user]);
 

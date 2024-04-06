@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003/api/admin";
+// const BASE_URL = "http://localhost:3003/api/admin";
+const BASE_URL = "https://library.imlast.top/api/admin";
 
 /**
  * Get info of the library's floor and penalty

@@ -2,7 +2,8 @@ import axios from "axios";
 
 import tokenService from "./token";
 
-const BASE_URL = "http://localhost:3003/api/seat";
+// const BASE_URL = "http://localhost:3003/api/seat";
+const BASE_URL = "https://library.imlast.top/api/seat";
 
 /**
  * Get seat info of the library

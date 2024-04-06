@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003/api/penalty";
+// const BASE_URL = "http://localhost:3003/api/penalty";
+const BASE_URL = "https://library.imlast.top/api/penalty";
 
 import tokenService from "./token";
 

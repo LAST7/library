@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003/api/user";
+// const BASE_URL = "http://localhost:3003/api/user";
+const BASE_URL = "https://library.imlast.top/api/user";
 
 import tokenService from "./token";
 
@@ -10,8 +11,14 @@ import tokenService from "./token";
  * @returns {Promise<object>} - data returned from the backend server
  */
 const getInfo = async () => {
+    const token = tokenService.getToken();
+    // no local token found
+    if (!token) {
+        return null;
+    }
+
     const config = {
-        headers: { Authorization: tokenService.getToken() },
+        headers: { Authorization: token },
     };
 
     const response = await axios.get(`${BASE_URL}/info`, config);
