@@ -59,8 +59,9 @@ const ChgPasswdDialog = ({ buttonVariant, setLocalUser }) => {
                 emptyInput();
 
                 toast.info("密码修改成功，请重新登录");
-                // BUG: This will trigger an update while the component is being renderred.
-                // Maybe it's because that:
+
+                // BUG: This will trigger an update while the component is being rendering.
+                // Maybe it's because of that:
                 // this call is inside a callback function of an asynchronous operation,
                 // thus causing it being executed during the rendering of other components
                 navigate("/login");

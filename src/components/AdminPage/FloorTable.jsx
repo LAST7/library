@@ -47,8 +47,8 @@ const FloorTable = () => {
                         </TableCell>
                         <TableCell
                             className={cn("text-right text-lg font-bold", {
-                                "text-sky-400": f.open === 1,
-                                "text-rose-400": f.open === 0,
+                                "text-sky-600": f.open === 1,
+                                "text-rose-600": f.open === 0,
                             })}
                         >
                             {f.open === 1 ? "是" : "否"}

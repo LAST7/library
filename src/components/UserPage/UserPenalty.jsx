@@ -23,11 +23,7 @@ const UserPenalty = () => {
     return (
         <div className="bg-muted/50 border rounded-lg py-12 px-12 flex flex-row gap-8">
             <div className="w-full bg-green-0 flex flex-col gap-6">
-                <h2 className="pb-6 text-4xl font-bold">
-                    <span className="bg-gradient-to-b from-primary/50 to-primary text-transparent bg-clip-text">
-                        违规记录
-                    </span>
-                </h2>
+                <h2 className="pb-6 text-4xl font-bold">违规记录</h2>
                 <PenaltyTable records={records} />
             </div>
         </div>

@@ -54,9 +54,9 @@ const ReservationTable = ({ records }) => {
                             </TableCell>
                             <TableCell
                                 className={cn("text-right font-bold", {
-                                    "text-gray-500": r.status === "已过期",
-                                    "text-sky-300": r.status === "进行中",
-                                    "text-red-400": r.status === "取消",
+                                    "text-gray-600": r.status === "已过期",
+                                    "text-sky-600": r.status === "进行中",
+                                    "text-red-600": r.status === "取消",
                                 })}
                             >
                                 {r.status}

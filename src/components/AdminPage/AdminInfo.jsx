@@ -18,10 +18,7 @@ const AdminInfo = ({ adminName }) => {
     return (
         <div className="bg-muted/50 border rounded-lg py-12 px-12 flex flex-row justify-between items-center">
             <h2 className="pb-6 text-6xl font-bold">
-                <span className="bg-gradient-to-b from-primary/50 to-primary text-transparent bg-clip-text">
-                    你好，管理员{" "}
-                    <span className="text-sky-500">{adminName}</span>
-                </span>
+                你好，管理员 <span className="text-sky-600">{adminName}</span>
             </h2>
             <Button
                 variant="destructive"

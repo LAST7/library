@@ -76,17 +76,13 @@ const UserReservation = () => {
         <div className="bg-muted/50 border rounded-lg py-12 px-12 flex flex-row gap-8">
             <div className="w-full bg-green-0 flex flex-col gap-6">
                 <div className="flex flex-row justify-between">
-                    <h2 className="pb-6 text-4xl font-bold">
-                        <span className="bg-gradient-to-b from-primary/50 to-primary text-transparent bg-clip-text">
-                            预约记录
-                        </span>
-                    </h2>
+                    <h2 className="pb-6 text-4xl font-bold">预约记录</h2>
 
                     <Button
                         type="button"
                         variant="link"
                         onClick={handleReservation}
-                        className="py-6 px-6 text-sky-400 text-lg font-bold border border-gray-500"
+                        className="py-6 px-6 text-sky-600 text-lg font-bold border border-gray-500"
                     >
                         前往预约 <ChevronRightIcon className="h-6 w-6 ml-2" />
                     </Button>

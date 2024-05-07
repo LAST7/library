@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <ReduxProvider store={store}>
             <Router>
-                <ThemeProvider defaultTheme="dark">
+                <ThemeProvider defaultTheme="light">
                     <App />
                 </ThemeProvider>
             </Router>

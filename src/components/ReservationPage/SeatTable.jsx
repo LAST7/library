@@ -124,9 +124,9 @@ const SeatTable = ({ seatData }) => {
                 const avail = row.getValue("available");
                 return (
                     <div
-                        className={cn("", {
-                            "text-sky-400": avail === 1,
-                            "text-rose-400": avail === 0,
+                        className={cn("font-bold", {
+                            "text-sky-500": avail === 1,
+                            "text-rose-500": avail === 0,
                         })}
                     >
                         {avail === 1 ? "可用" : "不可用"}

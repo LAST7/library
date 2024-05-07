@@ -49,10 +49,10 @@ const AdminPenaltyTable = () => {
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={3} className="text-gray-400">
+                    <TableCell colSpan={3} className="text-gray-600">
                         总数
                     </TableCell>
-                    <TableCell className="text-right text-sky-400 text-lg font-bold">
+                    <TableCell className="text-right text-sky-600 text-lg font-bold">
                         {penalty.length}
                     </TableCell>
                 </TableRow>
