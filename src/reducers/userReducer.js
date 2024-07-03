@@ -28,6 +28,8 @@ const { setUserAction, clearUserAction } = userSlice.actions;
  * @returns {void} This function does not return anything.
  */
 export const setUser = (user) => {
+    // TODO: it does not necessarily to be a redux thunk action creator
+    // since there is no asynchronous operation.
     return (dispatch) => {
         dispatch(setUserAction(user));
     };

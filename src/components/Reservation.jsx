@@ -30,7 +30,7 @@ const Reservation = () => {
         if (dateTime.iTime === "" || dateTime.oTime === "") {
             return;
         } else if (
-            Number(dateTime.iTime.slice(0, 2)) >
+            Number(dateTime.iTime.slice(0, 2)) >=
             Number(dateTime.oTime.slice(0, 2))
         ) {
             toast.warning("结束时间不可在初始时间之前，请重新选择时间段");

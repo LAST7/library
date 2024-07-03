@@ -50,7 +50,6 @@ export const loginAdmin = (adminId, password) => {
  * @returns {void}
  */
 export const clearAdmin = () => {
-    // TODO: log out
     return (dispatch) => {
         dispatch(clearAdminAction());
     };
